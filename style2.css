@@ -1,0 +1,4 @@
+@charset "utf-8";
+
+*{margin:0; padding:0;}
+.inner{border:1px solid red; width:1200px; height:auto; margin:0 auto; text-align:center;}
