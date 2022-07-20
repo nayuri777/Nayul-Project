@@ -1,88 +1,102 @@
-//컴퓨터는 게임이 시작할때 랜덤한 숫자를 뽑는다
-//유저는 숫자를 입력할 수 있다
-//유저가 입력한 숫자가 컴퓨터가 뽑은 숫자보다 작으면 Up! 이라고 알려준다
-//유저가 입력한 숫자가 컴퓨터가 뽑은 숫자보다 크면 Down! 이라고 알려준다
-//유저가 입력한 숫자가 컴퓨터가 뽑은 숫자와 일치하다면 That's right이라고 뜨고 게임이 종료된다.
-//유저는 총 5번의 기회가 있다
-//게임이 종료되면 버튼은 비활성화된다
-//리셋버튼을 누르면 게임이 초기화된다
-//유저가 1~100범위 밖에 숫자를 입력할시에 경고메세지가 뜬다
-//유저가 이미 입력한 값을 또 입력할 시에 경고메세지가 뜬다
-
-let computerNum = 0;
-let userNum = document.getElementById("user-number");
-let resultArea = document.getElementById("result-area");
-let buttonGo = document.getElementById("button-go");
-let chancesArea = document.getElementById("chances-area");
-let buttonReset = document.getElementById("button-reset");
-let gameOver = false;
+let userInput = document.getElementById('user-num');
+let btnGo = document.getElementById("btn-go");
+let btnReset = document.getElementById("btn-reset");
+let gameResult = document.getElementById("game-result")
+let chance = document.getElementById("chance")
+let imgArea = document.getElementById("result-img");
 let chances = 5;
+let gameOver = false;
 let history = [];
 
-buttonGo.addEventListener("click", play);
-buttonReset.addEventListener("click", reset);
-userNum.addEventListener("focus", function(){
-    userNum.value = "";
+btnGo.addEventListener("click", play);
+btnReset.addEventListener("click", reset);
+userInput.addEventListener("focus", function(){
+    userInput.value = "";
 });
 
-
-
-function pickRandomNum(){
-    computerNum = Math.floor(Math.random()*100)+1;
-    console.log(computerNum);
+function computerNum(){
+    randomNum = Math.floor(Math.random()*100)+1;
+    console.log(randomNum)
 }
 
 function play(){
-    let userValue = userNum.value;
 
-    if(userValue > 100 || userValue < 1 ){
-        resultArea.textContent = "1부터 100사이의 수를 입력하세요"
-        return;
-    }
+   userNum = userInput.value;
 
-    if(history.includes(userValue)){
-        resultArea.textContent = "이미 입력한 숫자입니다."
-        return;
-    }
+   if(userNum > 100 || userNum < 0){
+    gameResult.innerText = "1~100사이의 숫자를 입력해 주세요."
+    return;
+   }else if(userNum == ""){
+    gameResult.innerText = "숫자를 입력해 주세요."
+    return;
+   }
+
+   if(history.includes(userNum)){
+    gameResult.innerText = "이미 입력한 숫자 입니다."
+    return;
+   }
+   
+   chances --;
+   chance.innerText = `기회가 ${chances}번 남았습니다.`
 
 
-    chances --;
-    chancesArea.textContent = `기회가 ${chances}번 남았습니다.`
-    
-    if(userValue < computerNum){
-        resultArea.textContent = "up!"
-    }else if(userValue > computerNum){
-        resultArea.textContent = "down!!"
-    }else{
-        resultArea.textContent = "정답입니다!"
+   switch(chances){
+
+    case 4:
+        imgArea.src = "no.gif";
+    break;
+
+    case 3:
+        imgArea.src = "nono.gif"
+    break;
+
+    case 2:
+        imgArea.src = "dance.gif"
+    break;
+
+    case 1:
+        imgArea.src = "129.gif"
+    break;
+
+    case 0:
+        imgArea.src = "zzz.gif"
         gameOver = true;
-    }
-    
-    history = userValue;
 
-    
+   }
 
-    if(chances < 1){
-        resultArea.textContent = "기회가 없습니다."
-        gameOver = true;
-    }
 
-    if(gameOver == true){
-        buttonGo.disabled = true;
-    }
+   if(userNum < randomNum){
+    gameResult.innerText = "UP!"
+   }else if(userNum > randomNum){
+    gameResult.innerText = "Down!"
+   }else{
+    gameResult.innerText = "That’s right!";
+    imgArea.src = "good.gif";
+    chance.innerText = "";
+    gameOver = true;
+   }
 
+
+   
+   history.push(userNum);
+
+   if(gameOver == true){
+    btnGo.disabled = true;
+   }
 }
 
 function reset(){
-    buttonGo.disabled = false;
-    history = [];
+    computerNum();
+    userInput.value = "";
+    gameResult.innerText = "숫자를 맞춰봐!"
+    chance.innerText = "기회가 5번 남았습니다."
+    imgArea.src = "sul.gif";
     chances = 5;
-    userNum.value = "";
-    resultArea.textContent = "결과가 이곳에 나옵니다."
-    chancesArea.textContent = "기회가 5번 남았습니다"
-    pickRandomNum();
+    history = [];
+    gameOver = false;
+    btnGo.disabled = false;
+    
 }
 
 
-
-pickRandomNum();
+computerNum();

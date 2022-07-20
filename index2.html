@@ -2,24 +2,30 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style2.css">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>up,down game</title>
 </head>
 <body>
-    <div id="wrapper">
+    <div class="wrapper">
         <div class="inner">
-            <div class="game-box">
-                <h1 class="game-tit">up! down ! 숫자 맞추기 게임</h1>
-                <p id="result-area">결과가 이곳에 나옵니다.</p>
-                <p id="chances-area">기회가 5번 남았습니다.</p>
-                <input type="number" id="user-number"/>
-                <button id="button-go">go</button>
-                <button id="button-reset">reset</button>
+            <h1 class="tit">업&amp;다운<br>숫자맞추기 게임</h1>
+            <p id="game-result">숫자를 맞춰봐!</p>
+            <p id="chance">기회가 <em>5번</em> 있습니다.</p>
+            <div id="result-img-area">
+                <img id="result-img" src="sul.gif" alt="술">
             </div>
+            <div class="input-group">
+                <input id="user-num" required class="input-area" type="number">
+            </div>
+            <button id="btn-go">Go</button>
+            <button id="btn-reset">reset</button>
         </div>
-        
-        <script src="main2.js"></script>
     </div>
+    <script src="main2.js"></script>
 </body>
 </html>
